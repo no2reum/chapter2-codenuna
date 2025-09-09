@@ -7,6 +7,37 @@
     <link rel="stylesheet" href="./style.css">
 </head>
 <body>
+    <div class="divWrap">
+        <h1>Todo List</h1>
+        <section class="container"> 
+            <input id="task-input" type="text">
+            <button id="add-button">+</button>
+        </section>
+        <section class="task-area">
+            <div class="task-tabs">
+                <div id="under-line"></div>
+                <div>
+                    All
+                </div>
+                <div>
+                    not Done
+                </div>
+                <div>
+                    Done
+                </div>
+                
+            </div>
+            <div id="task-board">
+                <div class="task">
+                    <div>Home</div>
+                    <div>
+                        <button>Check</button>
+                        <button>Delete</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
     <script src="./main.js"></script>
 </body>
 </html>
