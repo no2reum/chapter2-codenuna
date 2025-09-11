@@ -9,13 +9,21 @@
 //끝남탭은 끝난 아이탬만, 진행중은 진행중인 아이탬만
 //전체탭을 두르면 다시 전체아이템으로 돌아옴
 
+//[전역변수]
 let taskInput = document.getElementById("task-input")
 let addButton = document.getElementById("add-button")
+let tabs = document.querySelectorAll(".task-tabs div")
+console.log(tabs)
 let taskList = []
+let filterList =[]
 let taskBoard = document.getElementById("task-board")
+let mode = 'all'
 
 addButton.addEventListener("click", addTask)
 
+for(let i=0; i<tabs.length; i++){
+    tabs[i].addEventListener("click", function(event){filter(event)})
+}
 function addTask() {
     let task = {
         id:randomIdGenerate(),
@@ -28,23 +36,33 @@ function addTask() {
 }
 
 function render(){//그려주기 
+    let list =[]
+    if(mode === "all"){
+        list = taskList
+    }
+    else if(mode === "ongoing"){
+        list = filterList
+    }
+    else if(mode === "done"){
+
+    }
     let  resultHTML = ""
-    for(let i=0; i < taskList.length; i++){
-        if(taskList[i].isComplete == true){
+    for(let i=0; i < list.length; i++){
+        if(list[i].isComplete == true){
              resultHTML += `<div class="task">
-                    <div class="task-done">${taskList[i].taskContent}</div>
+                    <div class="task-done">${list[i].taskContent}</div>
                     <div>
-                        <span onClick="toggleComplete('${taskList[i].id}')"><i class="fa-solid fa-rotate-right fa-lg" style="color: #6b6b6b;"></i></span>
-                        <span onClick="deleteTask('${taskList[i].id}')"><i class="fa-solid fa-trash fa-lg" style="color: #ff0000;"></i></span>
+                        <span onClick="toggleComplete('${list[i].id}')"><i class="fa-solid fa-rotate-right fa-lg" style="color: #6b6b6b;"></i></span>
+                        <span onClick="deleteTask('${list[i].id}')"><i class="fa-solid fa-trash fa-lg" style="color: #ff0000;"></i></span>
                     </div>
                 </div>`
         }
         else{
            resultHTML += `<div class="task">
-                    <div>${taskList[i].taskContent}</div>
+                    <div>${list[i].taskContent}</div>
                     <div>
-                        <span onClick="toggleComplete('${taskList[i].id}')"><i class="fa-solid fa-check fa-lg" style="color: #00942c;"></i></span>
-                        <span onClick="deleteTask('${taskList[i].id}')"><i class="fa-solid fa-trash fa-lg" style="color: #ff0000;"></i></span>
+                        <span onClick="toggleComplete('${list[i].id}')"><i class="fa-solid fa-check fa-lg" style="color: #00942c;"></i></span>
+                        <span onClick="deleteTask('${list[i].id}')"><i class="fa-solid fa-trash fa-lg" style="color: #ff0000;"></i></span>
                     </div>
                 </div>` 
         }
@@ -66,9 +84,7 @@ function toggleComplete(id){
     console.log("id", id)
 }
 
-function randomIdGenerate(){
-    return '_' + Math.random().toString(36).substring(2,9);
-} //렌덤 식별id 
+
 
 function deleteTask(id){
     for(let i=0; i < taskList.length; i++){
@@ -79,3 +95,29 @@ function deleteTask(id){
     }
     render()
 }
+
+function filter(event){
+    console.log("filter", event.target.id)//클릭한 각 탭을
+     mode = event.target.id //event.target.id -> 변수만들기
+     filterList = []
+    if(mode === "all"){
+        render();
+    }
+    else if(mode === "ongoing"){
+        for(let i=0; i<taskList.length; i++){
+            if(taskList[i].isComplete === false){
+                filterList.push(taskList[i])
+            }
+        }
+        render()
+        console.log("진행중", filterList)
+    }
+    
+    else if(mode === "done"){
+
+    }
+}
+
+function randomIdGenerate(){
+    return '_' + Math.random().toString(36).substring(2,9);
+} //렌덤 식별id 
