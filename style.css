@@ -55,10 +55,26 @@ body {
 .task {
     display: flex;
     justify-content: space-between;
-    padding: 1em;
+    /* padding: 1em; */
+}
+.task > div {
+    padding: 0.5rem;
+}
+.task > div:nth-child(1) {
+    width : 100%;
+}
+.task > div:nth-child(2)  {
+    display: flex;
+}
+.task > div:nth-child(2) > span {
+    padding: 0 1rem 0 1rem;
+}
+.task > div:nth-child(2):hover {
+    cursor: pointer;
 }
 .task-done {
     text-decoration: line-through;
+    background-color: #DADADA;
 }
 .ri--arrow-go-back-line {
   display: inline-block;

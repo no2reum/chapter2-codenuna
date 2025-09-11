@@ -34,8 +34,8 @@ function render(){//그려주기
              resultHTML += `<div class="task">
                     <div class="task-done">${taskList[i].taskContent}</div>
                     <div>
-                        <button onClick="toggleComplete('${taskList[i].id}')">Check</button>
-                        <button onClick="deleteTask('${taskList[i].id}')">Delete</button>
+                        <span onClick="toggleComplete('${taskList[i].id}')"><i class="fa-solid fa-rotate-right fa-lg" style="color: #6b6b6b;"></i></span>
+                        <span onClick="deleteTask('${taskList[i].id}')"><i class="fa-solid fa-trash fa-lg" style="color: #ff0000;"></i></span>
                     </div>
                 </div>`
         }
@@ -43,8 +43,8 @@ function render(){//그려주기
            resultHTML += `<div class="task">
                     <div>${taskList[i].taskContent}</div>
                     <div>
-                        <button onClick="toggleComplete('${taskList[i].id}')">Check</button>
-                        <button onClick="deleteTask('${taskList[i].id}')">Delete</button>
+                        <span onClick="toggleComplete('${taskList[i].id}')"><i class="fa-solid fa-check fa-lg" style="color: #00942c;"></i></span>
+                        <span onClick="deleteTask('${taskList[i].id}')"><i class="fa-solid fa-trash fa-lg" style="color: #ff0000;"></i></span>
                     </div>
                 </div>` 
         }
