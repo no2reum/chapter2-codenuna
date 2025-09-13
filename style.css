@@ -24,16 +24,24 @@ body {
     display: flex;
 }
 #task-input {
-    flex: 1;
-    min-width: 0; 
+    width: 100%;
 }
 #add-button {
     flex: 0 0 auto;
-    width: 20px;
-    height: 20px;
+    line-height: 10px;
+    font-size: 30px;
+    font-weight: 700;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    border: 0;
+    color: #235e17;
+    background-color: #99ca8f;
 }
 #add-button:hover {
     cursor: pointer;
+    color: #fff;
+    background-color: #235e17;
 }
 .task-area {
     border: solid 2px #99ca8f;
@@ -41,7 +49,8 @@ body {
 .task-tabs {
     position: relative;
     display: flex;
-    border-bottom: solid 2px #99ca8f;
+    border-bottom: solid 4px #99ca8f;
+    flex-wrap: wrap;
 }
 .task-tabs > div {
     width: 80px;
@@ -54,18 +63,21 @@ body {
     width: 80px;
     top: 27px;
     position: absolute;
-    border-bottom: solid 4px #235e17;
+    height: 4px;
+    background-color: #235e17;
+    transition: all 0.3s ease;
 }
 .task {
     display: flex;
     justify-content: space-between;
-    /* padding: 1em; */
+    flex-wrap: wrap;
 }
 .task > div {
     padding: 0.5rem;
+    border-bottom: solid 1px #99ca8f ;
 }
 .task > div:nth-child(1) {
-    width : 100%;
+    flex: 1;
 }
 .task > div:nth-child(2)  {
     display: flex;
@@ -95,4 +107,26 @@ body {
   background-repeat: no-repeat;
   background-size: 100% 100%;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%230240ff' d='m12 13.171l4.95-4.95l1.414 1.415L12 16L5.636 9.636L7.05 8.222z'/%3E%3C/svg%3E");
+}
+
+@media (max-width: 600px) {
+    .container {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    #add-button {
+        margin-top: 8px;
+        width: 100%;
+        border-radius: 5px;
+        font-size: 20px;
+        height: 22px;
+    }
+    .task {
+        flex-direction: column;
+    }
+    .task > div:nth-child(2) {
+        width: 100%;
+        justify-content: right;
+    }
+
 }

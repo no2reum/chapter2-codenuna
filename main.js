@@ -13,13 +13,17 @@
 let taskInput = document.getElementById("task-input")
 let addButton = document.getElementById("add-button")
 let tabs = document.querySelectorAll(".task-tabs div")
-console.log(tabs)
+let underline = document.getElementById("under-line")
 let taskList = []
 let filterList =[]
 let taskBoard = document.getElementById("task-board")
 let mode = 'all'
 
 addButton.addEventListener("click", addTask)
+taskInput.addEventListener("focus", clearInput)
+taskInput.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") addTask()
+})
 
 for(let i=0; i<tabs.length; i++){
     tabs[i].addEventListener("click", function(event){filter(event)})
@@ -31,21 +35,24 @@ function addTask() {
         isComplete: false
     }
     taskList.push(task)
-    console.log(taskList)
-    render()
+    taskInput.value = ""
+    
+    filter()
 }
 
-function render(){//그려주기 
+function clearInput(){
+    taskInput.value = ""
+}
+
+function render(){
     let list =[]
     if(mode === "all"){
         list = taskList
     }
-    else if(mode === "ongoing"){
+    else if(mode === "ongoing" || mode === "done"){
         list = filterList
     }
-    else if(mode === "done"){
 
-    }
     let  resultHTML = ""
     for(let i=0; i < list.length; i++){
         if(list[i].isComplete == true){
@@ -80,7 +87,7 @@ function toggleComplete(id){
     }
     render();
     console.log(taskList)
-    // console.log("check")
+    
     console.log("id", id)
 }
 
@@ -88,36 +95,41 @@ function toggleComplete(id){
 
 function deleteTask(id){
     for(let i=0; i < taskList.length; i++){
-        if(taskList[i].id == id){
+        if(taskList[i].id == id)
             taskList.splice(i,1)
             break;
         }
+        filter();
     }
-    render()
-}
 
-function filter(event){
-    console.log("filter", event.target.id)//클릭한 각 탭을
-     mode = event.target.id //event.target.id -> 변수만들기
-     filterList = []
-    if(mode === "all"){
-        render();
+tabs.forEach((menu) =>{
+    menu.addEventListener("click", (e) => horizontalIndicator(e))
+}) 
+function horizontalIndicator(e){
+        underline.style.left = e.currentTarget.offsetLeft + "px";
+        underline.style.width = e.currentTarget.offsetWidth + "px"
+        underline.style.top = 
+        e.currentTarget.offsetTop + e.currentTarget.offsetHeight + "px"
     }
-    else if(mode === "ongoing"){
-        for(let i=0; i<taskList.length; i++){
-            if(taskList[i].isComplete === false){
-                filterList.push(taskList[i])
-            }
-        }
-        render()
-        console.log("진행중", filterList)
-    }
-    
-    else if(mode === "done"){
 
-    }
+function filter(event = null){
+  
+  if (event) {
+    mode = event.target.id;
+  }
+
+  if (mode === "all") {
+    filterList = taskList;
+  } else if (mode === "ongoing") {
+    filterList = taskList.filter(task => !task.isComplete);
+  } else if (mode === "done") {
+    filterList = taskList.filter(task => task.isComplete);
+  }
+
+  render();
+  console.log(mode)
 }
 
 function randomIdGenerate(){
     return '_' + Math.random().toString(36).substring(2,9);
-} //렌덤 식별id 
+} 
